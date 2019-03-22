@@ -11,17 +11,17 @@ int main()
 {
 	cout << "This program is a comic book organizer. Please enter the comics' " << endl <<
 			"series name, issue name, author, artist (orPenciller), colorist, issue number" <<
-			" (with variant), date published, condition, and price paid." << endl;
+			" (with variant), date published, condition, and price paid, when applicable." << endl;
 	cout << endl;
 
-	string seriesName;
-	string issueName;
-	string author;
-	string artistOrPenciller;
-	string colorist;
-	int issueNumber;
-	char variantLetter;
-	string publishDate;
+	string seriesName;					// the complete title of the series
+	string issueName;					// some comics have specific names for the issue
+	string author;						// enter full name
+	string artistOrPenciller;			// the drawer
+	string colorist;					// the colorer
+	int issueNumber;					// the number assighned to an issue in a series
+	char variantLetter;					// this letter corresponds w/ the different cover arts available for an issue (some are valuable than others)
+	string publishDate;					// the date published
 	string conditionRating;
 	double comicPrice;
 	char userAnswer;
@@ -92,10 +92,18 @@ int main()
 			}
 	 }
 	while (userAnswer == 'Y');
-	if (userAnswer == 'N'){
+	if (userAnswer == 'N')
+	{
 		cout << endl;
 		cout << endl;
-		cout << "Keep your comics safe! Thank you for using this program." << endl;}
-
+		cout << "Keep your comics safe! Thank you for using this program." << endl;
+	}
+		
+		
+		
+		
+// find a way to select and alphebetize	by selected parameters	
+// Need to figure out storage. watch lecture 0x17 (3-1-19)
+// stay tune for arrays
 return 0;
 }
