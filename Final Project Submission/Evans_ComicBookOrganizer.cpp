@@ -3,10 +3,12 @@
  * the comics' series name, issue name, issue number, author, and main artist.
  * Hopefully it will organize these titles by the users selected parameters. */
 // Author: Kyla Evans
-// Date Last Modified: 3/29/19
+// Date Last Modified: 4/1/19
 #include <iostream>
+#include <fstream>
+#include <string>
 using namespace std;
-//#include <string>
+
 int getComicInfo()
 {
 	int comicInfo;
@@ -58,7 +60,8 @@ int main()
 	//int comicInfo;
 	int numberOfComics =0;
 	
-	
+	//ofstream outFile;
+	//outFile.open();
 		
 	cout << "This program is a comic book organizer. Please enter the comics' " << endl <<
 			"series name, issue name, author, artist (orPenciller), colorist, issue number" <<
