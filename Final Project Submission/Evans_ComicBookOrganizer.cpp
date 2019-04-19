@@ -9,28 +9,32 @@
 #include <string>
 using namespace std;
 
-int getComicInfo()
+int getAndStoreComicInfo()
 {
 	int comicInfo;
 	string seriesName;					// the complete title of the series
 	string issueName;					// some comics have specific names for the issue
 	string author;						// enter full name
-	string artistOrPenciller;			// the drawer
-	string colorist;					// the colorer
-	int issueNumber;					// the number assighned to an issue in a series
-	char variantLetter;					// this letter corresponds w/ the different cover arts available for an issue (some are valuable than others)
-	string publishDate;					// the date published
-	string conditionRating;
-	double comicPrice;
+	//string artistOrPenciller;			// the drawer
+	//string colorist;					// the colorer
+	//int issueNumber;					// the number assighned to an issue in a series
+	//char variantLetter;					// this letter corresponds w/ the different cover arts available for an issue (some are valuable than others)
+	//string publishDate;					// the date published
+	//string conditionRating;
+	//double comicPrice;
 	// Use getline for the strings
+	ofstream seriesNamefile, issueNamefile, authorfile;
 
 	cout << "Please enter series name." << endl;
 	getline(cin, seriesName);
+	seriesNamefile << seriesName;
 	cout << "Please enter issue name, if applicable." << endl;
 	getline(cin, issueName); // Can be considered a subtitle
+	issueNamefile << issueName;
 	cout << "Please enter author's name." << endl;
 	getline(cin, author);
-	cout << "Please enter the artist's or penciller's name." << endl;
+	authorfile << author;
+	/*cout << "Please enter the artist's or penciller's name." << endl;
 	getline(cin, artistOrPenciller); // Comics can say either
 	cout << "Please enter colorist's name." << endl;
 	getline(cin, colorist); // The artist usually only draws, not colors
@@ -43,15 +47,53 @@ int getComicInfo()
 	cout << "Please enter condition rating. (Use letter notation)." << endl;
 	 cin >> conditionRating; // Letter rating system prefered
 	cout << "Please enter the price you paid for the comic. (DO NOT PUT COMMAS)" << endl;
-	 cin >> comicPrice;
+	 cin >> comicPrice;*/
 	cout << endl;
 
-	cout << seriesName << "| " << issueName << "| " << author << 
+	cout << seriesName << "| " << issueName << "| " << author << /*
 	"| " << artistOrPenciller  << "| " << colorist << "| " << issueNumber << variantLetter << "| " << 
-	publishDate << "| " << conditionRating << "| " << comicPrice << endl;
+	publishDate << "| " << conditionRating << "| " << comicPrice <<*/ endl;
 	cout << endl;
 	return (comicInfo);
 } 
+// Constants for file calling and usage
+const string SERIES_NAME_FILE = "C:\\Users\\Witle\\Documents\\GitHub\\cosc-a211-term-project-rycosvena\\Final Project Submission.txt";
+const string ISSUE_NAME_FILE = "C:\\Users\\Witle\\Documents\\GitHub\\cosc-a211-term-project-rycosvena\\Final Project Submission.txt";
+const string AUTHOR_FILE = "C:\\Users\\Witle\\Documents\\GitHub\\cosc-a211-term-project-rycosvena\\Final Project Submission.txt";
+
+int openAndCheckFiles()
+{
+	fstream seriesNamefile, issueNamefile, authorfile;
+	seriesNamefile.open(SERIES_NAME_FILE);  
+	if (!seriesNamefile)
+	{
+		cout << "Series name file open failure" << endl;
+		cout << SERIES_NAME_FILE << endl;
+	
+	}
+	issueNamefile.open(ISSUE_NAME_FILE);  
+	if (!issueNamefile)
+	{
+		cout << "Issue name file open failure" << endl;
+		cout << ISSUE_NAME_FILE << endl;
+	}
+	authorfile.open(AUTHOR_FILE);
+	if (!authorfile)
+	{
+		cout << "Author file open failure" << endl;
+		cout << AUTHOR_FILE << endl;
+	}
+	cout << endl;
+	return 0;
+}
+int closefiles()
+{
+	fstream seriesNamefile, issueNamefile, authorfile;
+	seriesNamefile.close();
+	issueNamefile.close();
+	authorfile.close();
+	return 0;
+}
 const int MAX_NUM_OF_COMICS = 500;
 
 int main()
@@ -59,15 +101,15 @@ int main()
 	char userAnswer;
 	//int comicInfo;
 	int numberOfComics =0;
+	 
+	openAndCheckFiles();
 	
-	//ofstream outFile;
-	//outFile.open();
 		
 	cout << "This program is a comic book organizer. Please enter the comics' " << endl <<
 			"series name, issue name, author, artist (orPenciller), colorist, issue number" <<
 			" (with variant), date published, condition, and price paid, when applicable." << endl;
 	cout << endl;
-	getComicInfo ();
+	getAndStoreComicInfo();
 	numberOfComics++;
 	
 	cout << "Do you want to input more comics? Y (Yes) or N (No)" << endl;
@@ -78,7 +120,7 @@ int main()
 		if (userAnswer == 'Y')
 		{
 			cin.ignore(100,'\n');
-			getComicInfo(); //will call function here
+			getAndStoreComicInfo(); //will call function here
 			numberOfComics++;
 			cout << "Do you want to input more comics? Y (Yes) or N (No)" << endl;
 			cin >> userAnswer;
@@ -86,6 +128,7 @@ int main()
 	}
 	if (userAnswer == 'N')
 	{
+		closefiles();
 		cout << endl;
 		cout << endl;
 		cout << "You entered: " << numberOfComics << " comics!" << endl;
