@@ -3,13 +3,13 @@
  * the comics' series name, issue name, issue number, author, and main artist.
  * Hopefully it will organize these titles by the users selected parameters. */
 // Author: Kyla Evans
-// Date Last Modified: 4/1/19
+// Date Last Modified: 4/19/19
 #include <iostream>
 #include <fstream>
 #include <string>
 using namespace std;
 
-int getAndStoreComicInfo()
+int getAndStoreComicInfo()			// gets all of the comics' information from the user
 {
 	int comicInfo;
 	string seriesName;					// the complete title of the series
@@ -61,7 +61,7 @@ const string SERIES_NAME_FILE = "C:\\Users\\Witle\\Documents\\GitHub\\cosc-a211-
 const string ISSUE_NAME_FILE = "C:\\Users\\Witle\\Documents\\GitHub\\cosc-a211-term-project-rycosvena\\Final Project Submission.txt";
 const string AUTHOR_FILE = "C:\\Users\\Witle\\Documents\\GitHub\\cosc-a211-term-project-rycosvena\\Final Project Submission.txt";
 
-int openAndCheckFiles()
+int openAndCheckFiles()			// checks and opens the comic info files
 {
 	fstream seriesNamefile, issueNamefile, authorfile;
 	seriesNamefile.open(SERIES_NAME_FILE);  
@@ -86,13 +86,16 @@ int openAndCheckFiles()
 	cout << endl;
 	return 0;
 }
-int closefiles()
+int closefiles()			// closes the comic info files
 {
 	fstream seriesNamefile, issueNamefile, authorfile;
 	seriesNamefile.close();
 	issueNamefile.close();
 	authorfile.close();
 	return 0;
+}
+int recallFiles ()
+{
 }
 const int MAX_NUM_OF_COMICS = 500;
 
