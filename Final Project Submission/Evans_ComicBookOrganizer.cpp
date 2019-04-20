@@ -23,6 +23,7 @@ int getAndStoreComicInfo()			// gets all of the comics' information from the use
 	//string conditionRating;
 	//double comicPrice;
 	// Use getline for the strings
+	//++PROF+ANDREW:    get rid of these, use globals
 	ofstream seriesNamefile, issueNamefile, authorfile;
 
 	cout << "Please enter series name." << endl;
@@ -50,7 +51,8 @@ int getAndStoreComicInfo()			// gets all of the comics' information from the use
 	 cin >> comicPrice;*/
 	cout << endl;
 
-	//++PROF+ANDREW:    This looks like it should be in a "print comic" function
+	//++PROF+ANDREW:    This looks like it should be in a "print comic" function, not
+	// this "input comic" function
 	cout << seriesName << "| " << issueName << "| " << author <<
 		//	"| " << artistOrPenciller  <<
 		// "| " << colorist <<
@@ -72,10 +74,9 @@ const string AUTHOR_FILE = LOCATION_OF_FILES + "Final Project Submission.txt";
 
 int openAndCheckFiles()			// checks and opens the comic info files
 {
-	//++PROF+ANDREW:    create a function to open one file at a time, not all of them
+	//++PROF+ANDREW:    use globals
 	fstream seriesNamefile, issueNamefile, authorfile;
-	//++PROF+ANDREW:    these fstream variables won't be available outside this function - they
-	// are local variables
+
 	seriesNamefile.open(SERIES_NAME_FILE);
 	if (!seriesNamefile)
 	{
@@ -102,6 +103,7 @@ int closefiles()			// closes the comic info files
 {
 	//++PROF+ANDREW:    these won't actually close anything - you need to pass the files in to the
 	// function
+	//++PROF+ANDREW:    use globals instead
 	fstream seriesNamefile, issueNamefile, authorfile;
 	seriesNamefile.close();
 	issueNamefile.close();
