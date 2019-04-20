@@ -50,28 +50,40 @@ int getAndStoreComicInfo()			// gets all of the comics' information from the use
 	 cin >> comicPrice;*/
 	cout << endl;
 
-	cout << seriesName << "| " << issueName << "| " << author << /*
-	"| " << artistOrPenciller  << "| " << colorist << "| " << issueNumber << variantLetter << "| " << 
-	publishDate << "| " << conditionRating << "| " << comicPrice <<*/ endl;
+	//++PROF+ANDREW:    This looks like it should be in a "print comic" function
+	cout << seriesName << "| " << issueName << "| " << author <<
+		//	"| " << artistOrPenciller  <<
+		// "| " << colorist <<
+		// "| " << issueNumber << variantLetter <<
+		// "| " << publishDate <<
+		// "| " << conditionRating <<
+		// "| " << comicPrice <<
+		endl;
 	cout << endl;
 	return (comicInfo);
-} 
+}
 // Constants for file calling and usage
-const string SERIES_NAME_FILE = "C:\\Users\\Witle\\Documents\\GitHub\\cosc-a211-term-project-rycosvena\\Final Project Submission.txt";
-const string ISSUE_NAME_FILE = "C:\\Users\\Witle\\Documents\\GitHub\\cosc-a211-term-project-rycosvena\\Final Project Submission.txt";
-const string AUTHOR_FILE = "C:\\Users\\Witle\\Documents\\GitHub\\cosc-a211-term-project-rycosvena\\Final Project Submission.txt";
+//++PROF+ANDREW:    see adaptation here. You can define a directory location and use it as a
+// prefix for the actual file variables
+const string LOCATION_OF_FILES = "C:\\Users\\Witle\\Documents\\GitHub\\cosc-a211-term-project-rycosvena\\";
+const string SERIES_NAME_FILE = LOCATION_OF_FILES + "Final Project Submission.txt";
+const string ISSUE_NAME_FILE = LOCATION_OF_FILES + "Final Project Submission.txt";
+const string AUTHOR_FILE = LOCATION_OF_FILES + "Final Project Submission.txt";
 
 int openAndCheckFiles()			// checks and opens the comic info files
 {
+	//++PROF+ANDREW:    create a function to open one file at a time, not all of them
 	fstream seriesNamefile, issueNamefile, authorfile;
-	seriesNamefile.open(SERIES_NAME_FILE);  
+	//++PROF+ANDREW:    these fstream variables won't be available outside this function - they
+	// are local variables
+	seriesNamefile.open(SERIES_NAME_FILE);
 	if (!seriesNamefile)
 	{
 		cout << "Series name file open failure" << endl;
 		cout << SERIES_NAME_FILE << endl;
-	
+
 	}
-	issueNamefile.open(ISSUE_NAME_FILE);  
+	issueNamefile.open(ISSUE_NAME_FILE);
 	if (!issueNamefile)
 	{
 		cout << "Issue name file open failure" << endl;
@@ -88,6 +100,8 @@ int openAndCheckFiles()			// checks and opens the comic info files
 }
 int closefiles()			// closes the comic info files
 {
+	//++PROF+ANDREW:    these won't actually close anything - you need to pass the files in to the
+	// function
 	fstream seriesNamefile, issueNamefile, authorfile;
 	seriesNamefile.close();
 	issueNamefile.close();
@@ -104,17 +118,24 @@ int main()
 	char userAnswer;
 	//int comicInfo;
 	int numberOfComics =0;
-	 
+
 	openAndCheckFiles();
-	
-		
+
+	//++PROF+ANDREW:    restructured to
 	cout << "This program is a comic book organizer. Please enter the comics' " << endl <<
-			"series name, issue name, author, artist (orPenciller), colorist, issue number" <<
-			" (with variant), date published, condition, and price paid, when applicable." << endl;
+			"series name, issue name, author" <<
+			// ", artist (orPenciller)" <<
+			// ", colorist" <<
+			// ", issue number" <<
+			// " (with variant)" <<
+			// ", date published" <<
+			// ", condition" <<
+			// ", and price paid, when applicable." <<
+			endl;
 	cout << endl;
 	getAndStoreComicInfo();
 	numberOfComics++;
-	
+
 	cout << "Do you want to input more comics? Y (Yes) or N (No)" << endl;
 	 cin >> userAnswer;
 // I probably need if/ else
@@ -135,13 +156,13 @@ int main()
 		cout << endl;
 		cout << endl;
 		cout << "You entered: " << numberOfComics << " comics!" << endl;
-		cout << "Keep your comics safe! Thank you for using this program." << endl;	
+		cout << "Keep your comics safe! Thank you for using this program." << endl;
 	}
-		
-		
-		
-// search function??		
-// find a way to select and alphebetize	by selected parameters	
+
+
+
+// search function??
+// find a way to select and alphebetize	by selected parameters
 // Need to figure out storage. watch lecture 0x17 (3-1-19)
 // stay tune for arrays
 return 0;
