@@ -3,8 +3,11 @@
 // getComicInfo() function complete
 // writeToFiles() function I think is complete
 // recallFiles() function I think is complete
-// closeFiles() function I think is complete (compiler says not complete
+// closeFiles() function I think is complete
 // save_comic_files(), loadComicFiles(), and listComics() functions need to be started
+	/*move the file-write operation into a "save comic files" function that writes a single
+	  comic (from the in-memory arrays or vectors) to the storage files. From there, you can 
+	  stub out a complete menu system that adds "load comic files" and "list comics".*/
 // Vectors NEED to be incorporated
 	//with sort and searches
 // Incorporate all functions into main
@@ -57,7 +60,7 @@ string author;						// enter full name
 //double pricePayed;
 // Use getline for the strings
 
-int openAndCheckFiles()			// checks and opens the comic info files
+int openAndCheckOFiles()			// checks and opens the comic info files
 {
 	series_namefile.open(SERIES_NAME_FILE);
 	if (!series_namefile)
@@ -166,7 +169,7 @@ int getComicInfo()			// gets all of the comics' information from the user
 	cout << endl;
 	return (comicInfo);
 }
-int writeToFiles()
+int writeToFiles()			// take user inputs and put into respective files
 {
 	int write;
 	series_namefile << seriesName;
@@ -184,7 +187,7 @@ int writeToFiles()
 	return (write);
 }
 
-int recallFiles ()
+int recallFiles ()			// calling the files to read inputs within
 {
 	int recall;
 	seriesnamefile >> seriesName;
@@ -231,9 +234,28 @@ int closefiles()			// closes the comic info files
 	
 	return 0;
 }
-void save_comic_files();
-int loadComicFiles();
-int listComics();
+/*
+ should:
+		load comic-book data into parallel arrays
+		give the user a command to save the data from the arrays into files
+		give the user a command to load the data from the files into the arrays
+ */ 
+void save_comic_files()
+{}
+int loadComicFiles()
+{
+	int loaded;
+	//open and check ifstream files
+	return (loaded);
+}
+int listComics()
+{
+	int list;
+	cout << "How would you like your comics organized?" << endl;
+	//cout << make list to choose what variable to organize comics by << endl; 
+	//do cases for the cout formatting (try to do it in chart format)
+	return (list);
+}
 
 
 
@@ -243,7 +265,7 @@ int main()
 	//int comicInfo;
 	int numberOfComics =0;
 
-	openAndCheckFiles();
+	openAndCheckOFiles();
 
 	//++PROF+ANDREW:    restructured to
 	cout << "This program is a comic book organizer. Please enter the comics' " << endl <<
@@ -277,8 +299,11 @@ int main()
 	if (userAnswer == 'N')
 	{
 		closefiles();
+		save_comic_files();
+		loadComicFiles();
 		cout << endl;
 		cout << endl;
+		listComics();
 		cout << "You entered: " << numberOfComics << " comics!" << endl;
 		cout << "Keep your comics safe! Thank you for using this program." << endl;
 	}
