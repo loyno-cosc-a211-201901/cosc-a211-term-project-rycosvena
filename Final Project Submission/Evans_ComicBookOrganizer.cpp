@@ -1,40 +1,142 @@
+// file location constants complete
+// openAndCheckFiles() function complete
+// getComicInfo() function complete
+// writeToFiles() function I think is complete
+// recallFiles() function I think is complete
+// closeFiles() function I think is complete (compiler says not complete
+// save_comic_files(), loadComicFiles(), and listComics() functions need to be started
+// Vectors NEED to be incorporated
+	//with sort and searches
+// Incorporate all functions into main
+// probably need cases for each input user preference
+
+
+
+
+
 // Program Name: Comic Book Organizer
 /* Purpose: To display and organize the comics inputted. Should display
  * the comics' series name, issue name, issue number, author, and main artist.
  * Hopefully it will organize these titles by the users selected parameters. */
 // Author: Kyla Evans
-// Date Last Modified: 4/19/19
+// Date Last Modified: 4/25/19
 #include <iostream>
 #include <fstream>
 #include <string>
 using namespace std;
 
-int getAndStoreComicInfo()			// gets all of the comics' information from the user
+// Constants for file calling and usage
+//++PROF+ANDREW:    see adaptation here. You can define a directory location and use it as a
+// prefix for the actual file variables
+const string LOCATION_OF_FILES = "C:\\Users\\Witle\\Documents\\GitHub\\cosc-a211-term-project-rycosvena\\";
+const string SERIES_NAME_FILE = LOCATION_OF_FILES + "Final Project Submission.txt";
+const string ISSUE_NAME_FILE = LOCATION_OF_FILES + "Final Project Submission.txt";
+const string AUTHOR_FILE = LOCATION_OF_FILES + "Final Project Submission.txt";
+//const string ARTIST_FILE = LOCATION_OF_FILES + "Final Project Submission.txt";
+//const string COLORIST_FILE = LOCATION_OF_FILES + "Final Project Submission.txt";
+//const string ISSUE_NUMBER_FILE = LOCATION_OF_FILES + "Final Project Submission.txt";
+//const string VARIANT_LETTER_FILE = LOCATION_OF_FILES + "Final Project Submission.txt";
+//const string PUBLISH_DATE_FILE = LOCATION_OF_FILES + "Final Project Submission.txt";
+//const string CONDITION_RATING_FILE = LOCATION_OF_FILES + "Final Project Submission.txt";
+//const string PRICE_PAYED_FILE = LOCATION_OF_FILES + "Final Project Submission.txt";
+
+//++PROF+ANDREW:    use globals
+//fstream series_namefile, issue_namefile, authorfile;, artistfile, coloristfile, issue_numberfile, variant_letterfile, publish_datefile, conditionfile, price_payedfile;
+ofstream series_namefile, issue_namefile, author_file, artist_file, colorist_file, issue_numberfile, variant_letterfile, publish_datefile, condition_file, price_payedfile;
+ifstream seriesnamefile, issuenamefile, authorfile, artistfile, coloristfile, issuenumberfile, variantletterfile, publishdatefile, conditionfile, pricepayedfile;
+const int MAX_NUM_OF_COMICS = 500;
+string seriesName;					// the complete title of the series
+string issueName;					// some comics have specific names for the issue
+string author;						// enter full name
+//string artistOrPenciller;			// the drawer
+//string colorist;					// the colorer
+//int issueNumber;					// the number assighned to an issue in a series
+//char variantLetter;					// this letter corresponds w/ the different cover arts available for an issue (some are valuable than others)
+//string publishDate;					// the date published
+//string conditionRating;
+//double pricePayed;
+// Use getline for the strings
+
+int openAndCheckFiles()			// checks and opens the comic info files
+{
+	series_namefile.open(SERIES_NAME_FILE);
+	if (!series_namefile)
+	{
+		cout << "Series name file open failure" << endl;
+		cout << SERIES_NAME_FILE << endl;
+	}
+	issue_namefile.open(ISSUE_NAME_FILE);
+	if (!issue_namefile)
+	{
+		cout << "Issue name file open failure" << endl;
+		cout << ISSUE_NAME_FILE << endl;
+	}
+	author_file.open(AUTHOR_FILE);
+	if (!author_file)
+	{
+		cout << "Author file open failure" << endl;
+		cout << AUTHOR_FILE << endl;
+	}
+/*
+	artist_file.open(ARTIST_FILE);
+	if (!artist_file)
+	{
+		cout << "Artist file open failure" << endl;
+		cout << ARTIST_FILE << endl;
+	}
+	colorist_file.open(COLORIST_FILE);
+	if (!colorist_file)
+	{
+		cout << "Colorist file open failure" << endl;
+		cout << COLORIST_FILE << endl;
+	}
+	issue_numberfile.open(ISSUE_NUMBER_FILE);
+	if (!issue_numberfile)
+	{
+		cout << "Issue number file open failure" << endl;
+		cout << ISSUE_NUMBER_FILE << endl;
+	}
+	variant_letterfile.open(VARIANT_LETTER_FILE);
+	if (!variant_letterfile)
+	{
+		cout << "Variant letter file open failure" << endl;
+		cout << VARIANT_LETTER_FILE << endl;
+	}
+	series_namefile.open(PUBLISH_DATE_FILE);
+	if (!series_namefile)
+	{
+		cout << "Series name file open failure" << endl;
+		cout << SERIES_NAME_FILE << endl;
+	}
+	condition_file.open(CONDITION_RATING_FILE);
+	if (!condition_file)
+	{
+		cout << "Condition file open failure" << endl;
+		cout << CONDITION_RATING_FILE << endl;
+	}
+	price_payedfile.open(PRICE_PAYED_FILE);
+	if (!price_payedfile)
+	{
+		cout << "Price paid file open failure" << endl;
+		cout << PRICE_PAYED_FILE << endl;
+	}
+*/
+	cout << endl;
+	return 0;
+}
+int getComicInfo()			// gets all of the comics' information from the user
 {
 	int comicInfo;
-	string seriesName;					// the complete title of the series
-	string issueName;					// some comics have specific names for the issue
-	string author;						// enter full name
-	//string artistOrPenciller;			// the drawer
-	//string colorist;					// the colorer
-	//int issueNumber;					// the number assighned to an issue in a series
-	//char variantLetter;					// this letter corresponds w/ the different cover arts available for an issue (some are valuable than others)
-	//string publishDate;					// the date published
-	//string conditionRating;
-	//double comicPrice;
-	// Use getline for the strings
-	//++PROF+ANDREW:    get rid of these, use globals
-	ofstream seriesNamefile, issueNamefile, authorfile;
-
 	cout << "Please enter series name." << endl;
 	getline(cin, seriesName);
-	seriesNamefile << seriesName;
+	
+	
 	cout << "Please enter issue name, if applicable." << endl;
 	getline(cin, issueName); // Can be considered a subtitle
-	issueNamefile << issueName;
+	
 	cout << "Please enter author's name." << endl;
 	getline(cin, author);
-	authorfile << author;
+	
 	/*cout << "Please enter the artist's or penciller's name." << endl;
 	getline(cin, artistOrPenciller); // Comics can say either
 	cout << "Please enter colorist's name." << endl;
@@ -48,7 +150,7 @@ int getAndStoreComicInfo()			// gets all of the comics' information from the use
 	cout << "Please enter condition rating. (Use letter notation)." << endl;
 	 cin >> conditionRating; // Letter rating system prefered
 	cout << "Please enter the price you paid for the comic. (DO NOT PUT COMMAS)" << endl;
-	 cin >> comicPrice;*/
+	 cin >> pricePayed;*/
 	cout << endl;
 
 	//++PROF+ANDREW:    This looks like it should be in a "print comic" function, not
@@ -59,61 +161,81 @@ int getAndStoreComicInfo()			// gets all of the comics' information from the use
 		// "| " << issueNumber << variantLetter <<
 		// "| " << publishDate <<
 		// "| " << conditionRating <<
-		// "| " << comicPrice <<
+		// "| " << pricePayed <<
 		endl;
 	cout << endl;
 	return (comicInfo);
 }
-// Constants for file calling and usage
-//++PROF+ANDREW:    see adaptation here. You can define a directory location and use it as a
-// prefix for the actual file variables
-const string LOCATION_OF_FILES = "C:\\Users\\Witle\\Documents\\GitHub\\cosc-a211-term-project-rycosvena\\";
-const string SERIES_NAME_FILE = LOCATION_OF_FILES + "Final Project Submission.txt";
-const string ISSUE_NAME_FILE = LOCATION_OF_FILES + "Final Project Submission.txt";
-const string AUTHOR_FILE = LOCATION_OF_FILES + "Final Project Submission.txt";
-
-int openAndCheckFiles()			// checks and opens the comic info files
+int writeToFiles()
 {
-	//++PROF+ANDREW:    use globals
-	fstream seriesNamefile, issueNamefile, authorfile;
-
-	seriesNamefile.open(SERIES_NAME_FILE);
-	if (!seriesNamefile)
-	{
-		cout << "Series name file open failure" << endl;
-		cout << SERIES_NAME_FILE << endl;
-
-	}
-	issueNamefile.open(ISSUE_NAME_FILE);
-	if (!issueNamefile)
-	{
-		cout << "Issue name file open failure" << endl;
-		cout << ISSUE_NAME_FILE << endl;
-	}
-	authorfile.open(AUTHOR_FILE);
-	if (!authorfile)
-	{
-		cout << "Author file open failure" << endl;
-		cout << AUTHOR_FILE << endl;
-	}
-	cout << endl;
-	return 0;
+	int write;
+	series_namefile << seriesName;
+	issue_namefile << issueName;
+	author_file << author;
+/*
+	artist_fire << artistOrPenciller;
+	colorist_file << colorist;
+	issue_numberfile << issueNumber;
+	variant_letterfile << variantLetter;
+	publish_datefile << publishDate;
+	condition_file << conditionRating;
+	price_payedfile << pricePayed;
+*/
+	return (write);
 }
+
+int recallFiles ()
+{
+	int recall;
+	seriesnamefile >> seriesName;
+	issuenamefile >> issueName;
+	authorfile >> author;
+/*
+	artistfire >> artistOrPenciller;
+	coloristfile >> colorist;
+	issuenumberfile >> issueNumber;
+	variantletterfile >> variantLetter;
+	publishdatefile >> publishDate;
+	conditionfile >> conditionRating;
+	pricepayedfile >> pricePayed;
+*/
+	return (recall);
+}
+
 int closefiles()			// closes the comic info files
 {
 	//++PROF+ANDREW:    these won't actually close anything - you need to pass the files in to the
 	// function
-	//++PROF+ANDREW:    use globals instead
-	fstream seriesNamefile, issueNamefile, authorfile;
-	seriesNamefile.close();
-	issueNamefile.close();
-	authorfile.close();
+	// These don't compile.
+	/*series_namefile.close(SERIES_NAME_FILE);
+	  issue_namefile.close(ISSUE_NAME_FILE);
+	  author_file.close(AUTHOR_FILE);
+	  artist_file.close(ARTIST_FILE);
+	  colorist_file.close(COLORIST_FILE);
+	  issue_numberfile.close(ISSUE_NUMBER_FILE);
+	  variant_letterfile.close(VARIANT_LETTER_FILE);
+	  series_namefile.close(PUBLISH_DATE_FILE);
+	  condition_file.close(CONDITION_RATING_FILE);
+	  price_payedfile.close(PRICE_PAYED_FILE);
+	*/
+	series_namefile.close();
+	issue_namefile.close();
+	author_file.close();
+	/*artist_file.close();
+	colorist_file.close();
+	issue_numberfile.close();
+	variant_letterfile.close();
+	series_namefile.close();
+	condition_file.close();
+	price_payedfile.close();*/
+	
 	return 0;
 }
-int recallFiles ()
-{
-}
-const int MAX_NUM_OF_COMICS = 500;
+void save_comic_files();
+int loadComicFiles();
+int listComics();
+
+
 
 int main()
 {
@@ -135,7 +257,7 @@ int main()
 			// ", and price paid, when applicable." <<
 			endl;
 	cout << endl;
-	getAndStoreComicInfo();
+	getComicInfo();
 	numberOfComics++;
 
 	cout << "Do you want to input more comics? Y (Yes) or N (No)" << endl;
@@ -146,7 +268,7 @@ int main()
 		if (userAnswer == 'Y')
 		{
 			cin.ignore(100,'\n');
-			getAndStoreComicInfo(); //will call function here
+			getComicInfo(); //will call function here
 			numberOfComics++;
 			cout << "Do you want to input more comics? Y (Yes) or N (No)" << endl;
 			cin >> userAnswer;
@@ -160,7 +282,7 @@ int main()
 		cout << "You entered: " << numberOfComics << " comics!" << endl;
 		cout << "Keep your comics safe! Thank you for using this program." << endl;
 	}
-
+	
 
 
 // search function??
