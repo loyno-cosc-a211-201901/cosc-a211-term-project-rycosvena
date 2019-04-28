@@ -8,10 +8,11 @@
 	/*move the file-write operation into a "save comic files" function that writes a single
 	  comic (from the in-memory arrays or vectors) to the storage files. From there, you can 
 	  stub out a complete menu system that adds "load comic files" and "list comics".*/
-// Vectors NEED to be incorporated
+// global for each variable Vectors NEED to be incorporated
 	//with sort and searches
 // Incorporate all functions into main
-// probably need cases for each input user preference
+// probably need cases for each input user preference (completed)
+// Vectors w/ sets
 
 
 
@@ -22,15 +23,16 @@
  * the comics' series name, issue name, issue number, author, and main artist.
  * Hopefully it will organize these titles by the users selected parameters. */
 // Author: Kyla Evans
-// Date Last Modified: 4/25/19
+// Date Last Modified: 4/28/19
 #include <iostream>
+#include <iomanip>
 #include <fstream>
 #include <string>
+#include <vector>
+#include <set>
 using namespace std;
 
 // Constants for file calling and usage
-//++PROF+ANDREW:    see adaptation here. You can define a directory location and use it as a
-// prefix for the actual file variables
 const string LOCATION_OF_FILES = "C:\\Users\\Witle\\Documents\\GitHub\\cosc-a211-term-project-rycosvena\\";
 const string SERIES_NAME_FILE = LOCATION_OF_FILES + "Final Project Submission.txt";
 const string ISSUE_NAME_FILE = LOCATION_OF_FILES + "Final Project Submission.txt";
@@ -41,26 +43,27 @@ const string AUTHOR_FILE = LOCATION_OF_FILES + "Final Project Submission.txt";
 //const string VARIANT_LETTER_FILE = LOCATION_OF_FILES + "Final Project Submission.txt";
 //const string PUBLISH_DATE_FILE = LOCATION_OF_FILES + "Final Project Submission.txt";
 //const string CONDITION_RATING_FILE = LOCATION_OF_FILES + "Final Project Submission.txt";
-//const string PRICE_PAYED_FILE = LOCATION_OF_FILES + "Final Project Submission.txt";
+//const string PRICE_PAID_FILE = LOCATION_OF_FILES + "Final Project Submission.txt";
 
-//++PROF+ANDREW:    use globals
+
 //fstream series_namefile, issue_namefile, authorfile;, artistfile, coloristfile, issue_numberfile, variant_letterfile, publish_datefile, conditionfile, price_payedfile;
-ofstream series_namefile, issue_namefile, author_file, artist_file, colorist_file, issue_numberfile, variant_letterfile, publish_datefile, condition_file, price_payedfile;
-ifstream seriesnamefile, issuenamefile, authorfile, artistfile, coloristfile, issuenumberfile, variantletterfile, publishdatefile, conditionfile, pricepayedfile;
+ofstream series_namefile, issue_namefile, author_file, artist_file, colorist_file, issue_numberfile, variant_letterfile, publish_datefile, condition_file, price_paidfile;
+ifstream seriesnamefile, issuenamefile, authorfile, artistfile, coloristfile, issuenumberfile, variantletterfile, publishdatefile, conditionfile, pricepaidfile;
 const int MAX_NUM_OF_COMICS = 500;
-string seriesName;					// the complete title of the series
-string issueName;					// some comics have specific names for the issue
-string author;						// enter full name
-//string artistOrPenciller;			// the drawer
-//string colorist;					// the colorer
-//int issueNumber;					// the number assighned to an issue in a series
-//char variantLetter;					// this letter corresponds w/ the different cover arts available for an issue (some are valuable than others)
-//string publishDate;					// the date published
-//string conditionRating;
-//double pricePayed;
+int numberOfComics =0;
+string seriesName[MAX_NUM_OF_COMICS];					// the complete title of the series
+string issueName[MAX_NUM_OF_COMICS];					// some comics have specific names for the issue
+string author[MAX_NUM_OF_COMICS];						// enter full name
+//string artistOrPenciller[MAX_NUM_OF_COMICS];				// the drawer
+//string colorist[MAX_NUM_OF_COMICS];						// the colorer
+//int issueNumber[MAX_NUM_OF_COMICS];						// the number assighned to an issue in a series
+//char variantLetter[MAX_NUM_OF_COMICS];					// this letter corresponds w/ the different cover arts available for an issue (some are valuable than others)
+//string publishDate[MAX_NUM_OF_COMICS];					// the date published
+//string conditionRating[MAX_NUM_OF_COMICS];
+//double pricePaid[MAX_NUM_OF_COMICS];
 // Use getline for the strings
 
-int openAndCheckOFiles()			// checks and opens the comic info files
+bool openAndCheckOFiles()			// checks and opens the comic info writing files
 {
 	series_namefile.open(SERIES_NAME_FILE);
 	if (!series_namefile)
@@ -68,17 +71,29 @@ int openAndCheckOFiles()			// checks and opens the comic info files
 		cout << "Series name file open failure" << endl;
 		cout << SERIES_NAME_FILE << endl;
 	}
+	else
+	{
+		cout << " Series name file open success." << endl;
+	}
 	issue_namefile.open(ISSUE_NAME_FILE);
 	if (!issue_namefile)
 	{
 		cout << "Issue name file open failure" << endl;
 		cout << ISSUE_NAME_FILE << endl;
 	}
+	else
+	{
+		cout << " Issue name file open success." << endl;
+	}
 	author_file.open(AUTHOR_FILE);
 	if (!author_file)
 	{
 		cout << "Author file open failure" << endl;
 		cout << AUTHOR_FILE << endl;
+	}
+	else
+	{
+		cout << " Author file open success." << endl;
 	}
 /*
 	artist_file.open(ARTIST_FILE);
@@ -117,11 +132,118 @@ int openAndCheckOFiles()			// checks and opens the comic info files
 		cout << "Condition file open failure" << endl;
 		cout << CONDITION_RATING_FILE << endl;
 	}
-	price_payedfile.open(PRICE_PAYED_FILE);
-	if (!price_payedfile)
+	price_paidfile.open(PRICE_PAiD_FILE);
+	if (!price_paidfile)
 	{
 		cout << "Price paid file open failure" << endl;
 		cout << PRICE_PAYED_FILE << endl;
+	}
+*/
+	cout << endl;
+	return 0;
+}
+bool openAndCheckIFiles()			// checks and opens the comic info reading files
+{
+	seriesnamefile.open(SERIES_NAME_FILE);
+	if (!seriesnamefile)
+	{
+		cout << "Series name file open failure" << endl;
+		cout << SERIES_NAME_FILE << endl;
+	}
+	else
+	{
+		cout << " Series name file open success." << endl;
+	}
+	issuenamefile.open(ISSUE_NAME_FILE);
+	if (!issuenamefile)
+	{
+		cout << "Issue name file open failure" << endl;
+		cout << ISSUE_NAME_FILE << endl;
+	}
+	else
+	{
+		cout << " Issue name file open success." << endl;
+	}
+	authorfile.open(AUTHOR_FILE);
+	if (!authorfile)
+	{
+		cout << "Author file open failure" << endl;
+		cout << AUTHOR_FILE << endl;
+	}
+	else
+	{
+		cout << " Author file open success." << endl;
+	}
+/*
+	artistfile.open(ARTIST_FILE);
+	if (!artistfile)
+	{
+		cout << "Artist file open failure" << endl;
+		cout << ARTIST_FILE << endl;
+	}
+	else
+	{
+		cout << " Artist file open success." << endl;
+	}
+	coloristfile.open(COLORIST_FILE);
+	if (!coloristfile)
+	{
+		cout << "Colorist file open failure" << endl;
+		cout << COLORIST_FILE << endl;
+	}
+	else
+	{
+		cout << " Colorist file open success." << endl;
+	}
+	issuenumberfile.open(ISSUE_NUMBER_FILE);
+	if (!issuenumberfile)
+	{
+		cout << "Issue number file open failure" << endl;
+		cout << ISSUE_NUMBER_FILE << endl;
+	}
+	else
+	{
+		cout << " Issue number file open success." << endl;
+	}
+	variantletterfile.open(VARIANT_LETTER_FILE);
+	if (!variantletterfile)
+	{
+		cout << "Variant letter file open failure" << endl;
+		cout << VARIANT_LETTER_FILE << endl;
+	}
+	else
+	{
+		cout << " Variant letter file open success." << endl;
+	}
+	publishdate.open(PUBLISH_DATE_FILE);
+	if (!publishdatefile)
+	{
+		cout << "Publish date file open failure" << endl;
+		cout << PUBLISH_DATE_FILE_ << endl;
+	}
+	else
+	{
+		cout << " Publish date file open success." << endl;
+	}
+	conditionfile.open(CONDITION_RATING_FILE);
+	if (!conditionfile)
+	{
+		cout << "Condition file open failure" << endl;
+		cout << CONDITION_RATING_FILE << endl;
+	}
+	else
+	{
+		cout << " Condition rating file open success." << endl;
+	}
+	pricepaidfile.open(PRICE_PAID_FILE);
+	if (!pricepaidfile)
+	{
+		cout << "Price paid file open failure" << endl;
+		cout << PRICE_PAID_FILE << endl;
+	}
+	else
+	{
+		cout << " Price paid file open success." << endl;
 	}
 */
 	cout << endl;
@@ -131,58 +253,50 @@ int getComicInfo()			// gets all of the comics' information from the user
 {
 	int comicInfo;
 	cout << "Please enter series name." << endl;
-	getline(cin, seriesName);
+	getline(cin, seriesName[0]);
 	
 	
 	cout << "Please enter issue name, if applicable." << endl;
-	getline(cin, issueName); // Can be considered a subtitle
+	getline(cin, issueName[0]); // Can be considered a subtitle
 	
 	cout << "Please enter author's name." << endl;
-	getline(cin, author);
+	getline(cin, author[0]);
 	
 	/*cout << "Please enter the artist's or penciller's name." << endl;
-	getline(cin, artistOrPenciller); // Comics can say either
+	getline(cin, artistOrPenciller[0]); // Comics can say either
 	cout << "Please enter colorist's name." << endl;
-	getline(cin, colorist); // The artist usually only draws, not colors
+	getline(cin, colorist[0]); // The artist usually only draws, not colors
 	cout << "Please enter issue number." << endl;
-	 cin >> issueNumber;
+	 cin >> issueNumber[0];
 	cout << "Please enter variant letter." << endl;
-	 cin >> variantLetter;
+	 cin >> variantLetter[0];
 	cout << "Please enter the publish date. Separate the month and year with a slash if necessary." << endl;
-	 cin >> publishDate; // string/getline didn't work.
+	 cin >> publishDate[0]; // string/getline didn't work.
 	cout << "Please enter condition rating. (Use letter notation)." << endl;
-	 cin >> conditionRating; // Letter rating system prefered
+	 cin >> conditionRating[0]; // Letter rating system prefered
 	cout << "Please enter the price you paid for the comic. (DO NOT PUT COMMAS)" << endl;
-	 cin >> pricePayed;*/
+	 cin >> pricePaid[0];*/
 	cout << endl;
 
-	//++PROF+ANDREW:    This looks like it should be in a "print comic" function, not
-	// this "input comic" function
-	cout << seriesName << "| " << issueName << "| " << author <<
-		//	"| " << artistOrPenciller  <<
-		// "| " << colorist <<
-		// "| " << issueNumber << variantLetter <<
-		// "| " << publishDate <<
-		// "| " << conditionRating <<
-		// "| " << pricePayed <<
-		endl;
+
+	
 	cout << endl;
 	return (comicInfo);
 }
 int writeToFiles()			// take user inputs and put into respective files
 {
 	int write;
-	series_namefile << seriesName;
-	issue_namefile << issueName;
-	author_file << author;
+	series_namefile << seriesName[0] << endl;
+	issue_namefile << issueName[0] << endl;
+	author_file << author[0] << endl;
 /*
-	artist_fire << artistOrPenciller;
-	colorist_file << colorist;
-	issue_numberfile << issueNumber;
-	variant_letterfile << variantLetter;
-	publish_datefile << publishDate;
-	condition_file << conditionRating;
-	price_payedfile << pricePayed;
+	artist_fire << artistOrPenciller[0];
+	colorist_file << colorist[0];
+	issue_numberfile << issueNumber[0];
+	variant_letterfile << variantLetter[0];
+	publish_datefile << publishDate[0];
+	condition_file << conditionRating[0];
+	price_paidfile << pricePaid[0];
 */
 	return (write);
 }
@@ -190,25 +304,23 @@ int writeToFiles()			// take user inputs and put into respective files
 int recallFiles ()			// calling the files to read inputs within
 {
 	int recall;
-	seriesnamefile >> seriesName;
-	issuenamefile >> issueName;
-	authorfile >> author;
+	seriesnamefile >> seriesName[0];
+	issuenamefile >> issueName[0];
+	authorfile >> author[0];
 /*
-	artistfire >> artistOrPenciller;
-	coloristfile >> colorist;
-	issuenumberfile >> issueNumber;
-	variantletterfile >> variantLetter;
-	publishdatefile >> publishDate;
-	conditionfile >> conditionRating;
-	pricepayedfile >> pricePayed;
+	artistfire >> artistOrPenciller[0];
+	coloristfile >> colorist[0];
+	issuenumberfile >> issueNumber[0];
+	variantletterfile >> variantLetter[0];
+	publishdatefile >> publishDate[0];
+	conditionfile >> conditionRating[0];
+	pricepaidfile >> pricePaid[0];
 */
 	return (recall);
 }
 
-int closefiles()			// closes the comic info files
+int closeOfiles()			// closes the comic info files
 {
-	//++PROF+ANDREW:    these won't actually close anything - you need to pass the files in to the
-	// function
 	// These don't compile.
 	/*series_namefile.close(SERIES_NAME_FILE);
 	  issue_namefile.close(ISSUE_NAME_FILE);
@@ -219,7 +331,7 @@ int closefiles()			// closes the comic info files
 	  variant_letterfile.close(VARIANT_LETTER_FILE);
 	  series_namefile.close(PUBLISH_DATE_FILE);
 	  condition_file.close(CONDITION_RATING_FILE);
-	  price_payedfile.close(PRICE_PAYED_FILE);
+	  price_paidfile.close(PRICE_PAID_FILE);
 	*/
 	series_namefile.close();
 	issue_namefile.close();
@@ -230,7 +342,23 @@ int closefiles()			// closes the comic info files
 	variant_letterfile.close();
 	series_namefile.close();
 	condition_file.close();
-	price_payedfile.close();*/
+	price_paidfile.close();*/
+	
+	return 0;
+}
+
+int closeIfiles()
+{
+	seriesnamefile.close();
+	issuenamefile.close();
+	authorfile.close();
+	/*artistfile.close();
+	coloristfile.close();
+	issuenumberfile.close();
+	variantletterfile.close();
+	seriesnamefile.close();
+	conditionfile.close();
+	pricepaidfile.close();*/
 	
 	return 0;
 }
@@ -246,14 +374,117 @@ int loadComicFiles()
 {
 	int loaded;
 	//open and check ifstream files
+	openAndCheckIFiles();
+	
 	return (loaded);
 }
 int listComics()
 {
 	int list;
+	int choice;
+	int num = 1;
+	loadComicFiles();
 	cout << "How would you like your comics organized?" << endl;
-	//cout << make list to choose what variable to organize comics by << endl; 
+	cout << endl;
+	//make list to choose what variable to organize comics by
+	cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
+	cout << setw(5) << "1: Series Name" << endl;
+	cout << setw(5) << "2: Issue Name" << endl;
+	cout << setw(5) << "3: Author" << endl;
+	cout << setw(5) << "4: Artist/Penciller" << endl;
+	cout << setw(5) << "5: Colorist" << endl;
+	cout << setw(5) << "6: Issue Number" << endl;
+	cout << setw(5) << "7: Publsh Date" << endl;
+	cout << setw(5) << "8: Condition Rating" << endl;
+	cout << setw(5) << "9: Price Paid" << endl;
+	cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
+	cin >> choice;
+	cout << "You chose to organize your comics by option #" << choice << "." << endl;
 	//do cases for the cout formatting (try to do it in chart format)
+	for (numberOfComics = 0; numberOfComics <= MAX_NUM_OF_COMICS; numberOfComics++)
+	{
+		switch (choice)
+		{
+			case 1: cout << setw(10) << num++ << ": " << seriesName[numberOfComics] << "| " << issueName[numberOfComics] << "| " << author[numberOfComics] <<
+						// "| " << artistOrPenciller[0] <<
+						// "| " << colorist[0] <<
+						// "| " << issueNumber[0] << variantLetter[0] <<
+						// "| " << publishDate[0] <<
+						// "| " << conditionRating[0] <<
+						// "| " << pricePaid[0] <<
+						endl;
+					  break;
+			case 2: cout << issueName[0] << "| " << seriesName[0] << "| " << author[0] <<
+						//	"| " << artistOrPenciller[0] <<
+						// "| " << colorist[0] <<
+						// "| " << issueNumber[0] << variantLetter[0] <<
+						// "| " << publishDate[0] <<
+						// "| " << conditionRating[0] <<
+						// "| " << pricePaid[0] <<
+						endl;
+					  break;
+			case 3: cout << author[0] << "| " << seriesName[0] << "| " << issueName[0] << 
+						//	"| " << artistOrPenciller[0] <<
+						// "| " << colorist[0] <<
+						// "| " << issueNumber[0] << variantLetter[0] <<
+						// "| " << publishDate[0] <<
+						// "| " << conditionRating[0] <<
+						// "| " << pricePaid[0] <<
+						endl;
+					  break;
+			/*case '4': cout << artistOrPenciller[0] << "| " << seriesName[0] << "| " << issueName[0] << "| "
+						//	<< author[0] << "| "
+						//  << colorist[0] << "| "
+						//  << issueNumber[0] << variantLetter[0] << "| "
+						//  << publishDate[0] << "| " 
+						//  << conditionRating[0] << "| " 
+						//  << pricePaid[0] << endl;
+					  break;
+			case '5': cout << colorist[0] << "| " << issueName[0] << "| " << seriesName[0] << "| "
+						//	<< author[0] << "| "
+						//  << artistOrPenciller[0] << "| "
+						//  << issueNumber[0] << variantLetter[0] << "| "
+						//  << publishDate[0] << "| " 
+						//  << conditionRating[0] << "| " 
+						//  << pricePaid[0] << endl;
+					  break;
+			case '6': cout << issueNumber[0] << variantLetter[0] << "| " << seriesName[0] << "| " << issueName[0] << "| " 
+						//	<< author[0] << "| "
+						//  << artistOrPenciller[0] << "| "
+						//  << colorist[0] << "| "
+						//  << publishDate[0] << "| " 
+						//  << conditionRating[0] << "| " 
+						//  << pricePaid[0] << endl;
+					  break;
+			case '7': cout << publishDate[0] << "| " << seriesName[0] << "| " << issueName[0] << "| " 
+						//	<< author[0] << "| "
+						//  << artistOrPenciller[0] << "| "
+						//  << colorist[0] << "| "
+						//  << issueNumber[0] << variantLetter[0] << "| "
+						//  << conditionRating[0] << "| " 
+						//  << pricePaid[0] << endl;
+					  break;
+			case '8': cout << conditionRating[0] << "| " << seriesName[0] << "| " << issueName[0] << "| " 
+						//	<< author[0] << "| "
+						//  << artistOrPenciller[0] << "| "
+						//  << colorist[0] << "| "
+						//  << issueNumber[0] << variantLetter[0] << "| "
+						//  << publishDate[0] << "| " 
+						//  << pricePaid[0] << endl;
+					  break;
+			case '9': cout << pricePaid[0] << "| " << seriesName[0] << "| " << issueName[0] << "| "
+						//	<< author[0] << "| "
+						//  << artistOrPenciller[0] << "| "
+						//  << colorist[0] << "| "
+						//  << issueNumber[0] << variantLetter[0] << "| "
+						//  << publishDate[0] << "| " 
+						//  << conditionRating[0] << endl;
+					  break;*/
+			default: cout << "You didn't enter your organizing choice." << endl;
+			// Will try to restart questioning for choice. Choice function?
+		}
+	}
+	closeIfiles();
 	return (list);
 }
 
@@ -263,11 +494,10 @@ int main()
 {
 	char userAnswer;
 	//int comicInfo;
-	int numberOfComics =0;
+	
 
 	openAndCheckOFiles();
 
-	//++PROF+ANDREW:    restructured to
 	cout << "This program is a comic book organizer. Please enter the comics' " << endl <<
 			"series name, issue name, author" <<
 			// ", artist (orPenciller)" <<
@@ -298,9 +528,8 @@ int main()
 	}
 	if (userAnswer == 'N')
 	{
-		closefiles();
+		closeOfiles();
 		save_comic_files();
-		loadComicFiles();
 		cout << endl;
 		cout << endl;
 		listComics();
