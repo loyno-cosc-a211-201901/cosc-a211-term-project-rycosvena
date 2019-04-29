@@ -286,9 +286,9 @@ int getComicInfo()			// gets all of the comics' information from the user
 int writeToFiles()			// take user inputs and put into respective files
 {
 	int write;
-	series_namefile << seriesName[0] << endl;
-	issue_namefile << issueName[0] << endl;
-	author_file << author[0] << endl;
+	series_namefile << seriesName[numberOfComics] << endl;
+	issue_namefile << issueName[numberOfComics] << endl;
+	author_file << author[numberOfComics] << endl;
 /*
 	artist_fire << artistOrPenciller[0];
 	colorist_file << colorist[0];
@@ -304,9 +304,9 @@ int writeToFiles()			// take user inputs and put into respective files
 int recallFiles ()			// calling the files to read inputs within
 {
 	int recall;
-	seriesnamefile >> seriesName[0];
-	issuenamefile >> issueName[0];
-	authorfile >> author[0];
+	seriesnamefile >> seriesName[numberOfComics];
+	issuenamefile >> issueName[numberOfComics];
+	authorfile >> author[numberOfComics];
 /*
 	artistfire >> artistOrPenciller[0];
 	coloristfile >> colorist[0];
@@ -369,7 +369,10 @@ int closeIfiles()
 		give the user a command to load the data from the files into the arrays
  */ 
 void save_comic_files()
-{}
+{
+	closeOfiles();
+	cout << "Now saving inputted comics..." << endl;
+}
 int loadComicFiles()
 {
 	int loaded;
@@ -382,7 +385,6 @@ int listComics()
 {
 	int list;
 	int choice;
-	int num = 1;
 	loadComicFiles();
 	cout << "How would you like your comics organized?" << endl;
 	cout << endl;
@@ -393,7 +395,7 @@ int listComics()
 	cout << setw(5) << "3: Author" << endl;
 	cout << setw(5) << "4: Artist/Penciller" << endl;
 	cout << setw(5) << "5: Colorist" << endl;
-	cout << setw(5) << "6: Issue Number" << endl;
+	cout << setw(5) << "6: Issue Number w/ variant letter" << endl;
 	cout << setw(5) << "7: Publsh Date" << endl;
 	cout << setw(5) << "8: Condition Rating" << endl;
 	cout << setw(5) << "9: Price Paid" << endl;
@@ -401,11 +403,11 @@ int listComics()
 	cin >> choice;
 	cout << "You chose to organize your comics by option #" << choice << "." << endl;
 	//do cases for the cout formatting (try to do it in chart format)
-	for (numberOfComics = 0; numberOfComics <= MAX_NUM_OF_COMICS; numberOfComics++)
+	for (int comNo = 1; comNo <= numberOfComics; comNo++)
 	{
 		switch (choice)
 		{
-			case 1: cout << setw(10) << num++ << ": " << seriesName[numberOfComics] << "| " << issueName[numberOfComics] << "| " << author[numberOfComics] <<
+			case 1: cout << setw(10) << comNo << ": " << seriesName[numberOfComics] << "| " << issueName[numberOfComics] << "| " << author[numberOfComics] <<
 						// "| " << artistOrPenciller[0] <<
 						// "| " << colorist[0] <<
 						// "| " << issueNumber[0] << variantLetter[0] <<
@@ -528,7 +530,6 @@ int main()
 	}
 	if (userAnswer == 'N')
 	{
-		closeOfiles();
 		save_comic_files();
 		cout << endl;
 		cout << endl;
