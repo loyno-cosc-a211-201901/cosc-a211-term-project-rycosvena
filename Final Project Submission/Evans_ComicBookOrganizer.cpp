@@ -33,17 +33,17 @@
 using namespace std;
 
 // Constants for file calling and usage
-const string LOCATION_OF_FILES = "C:\\Users\\Witle\\Documents\\GitHub\\cosc-a211-term-project-rycosvena\\";
-const string SERIES_NAME_FILE = LOCATION_OF_FILES + "Final Project Submission.txt";
-const string ISSUE_NAME_FILE = LOCATION_OF_FILES + "Final Project Submission.txt";
-const string AUTHOR_FILE = LOCATION_OF_FILES + "Final Project Submission.txt";
+const string LOCATION_OF_FILES = "C:\\Users\\Witle\\Documents\\GitHub\\cosc-a211-term-project-rycosvena\\Final Project Submission\\";
+const string SERIES_NAME_FILE = LOCATION_OF_FILES + "series.txt";
+const string ISSUE_NAME_FILE = LOCATION_OF_FILES + "issue.txt";
+const string AUTHOR_FILE = LOCATION_OF_FILES + "author.txt";
 //const string ARTIST_FILE = LOCATION_OF_FILES + "Final Project Submission.txt";
 //const string COLORIST_FILE = LOCATION_OF_FILES + "Final Project Submission.txt";
 //const string ISSUE_NUMBER_FILE = LOCATION_OF_FILES + "Final Project Submission.txt";
 //const string VARIANT_LETTER_FILE = LOCATION_OF_FILES + "Final Project Submission.txt";
 //const string PUBLISH_DATE_FILE = LOCATION_OF_FILES + "Final Project Submission.txt";
 //const string CONDITION_RATING_FILE = LOCATION_OF_FILES + "Final Project Submission.txt";
-const string PRICE_PAID_FILE = LOCATION_OF_FILES + "Final Project Submission.txt";
+const string PRICE_PAID_FILE = LOCATION_OF_FILES + "price_paid.txt";
 
 
 //fstream series_namefile, issue_namefile, authorfile;, artistfile, coloristfile, issue_numberfile, variant_letterfile, publish_datefile, conditionfile, price_payedfile;
@@ -253,14 +253,14 @@ int getComicInfo()			// gets all of the comics' information from the user
 {
 	int comicInfo;
 	cout << "Please enter series name." << endl;
-	getline(cin, seriesName[numberOfComics + 1]);
+	getline(cin, seriesName[numberOfComics]);
 	
 	
 	cout << "Please enter issue name, if applicable." << endl;
-	getline(cin, issueName[numberOfComics + 1]); // Can be considered a subtitle
+	getline(cin, issueName[numberOfComics]); // Can be considered a subtitle
 	
 	cout << "Please enter author's name." << endl;
-	getline(cin, author[numberOfComics + 1]);
+	getline(cin, author[numberOfComics]);
 	
 	/*cout << "Please enter the artist's or penciller's name." << endl;
 	getline(cin, artistOrPenciller[0]); // Comics can say either
@@ -275,7 +275,7 @@ int getComicInfo()			// gets all of the comics' information from the user
 	cout << "Please enter condition rating. (Use letter notation)." << endl;
 	 cin >> conditionRating[0]; // Letter rating system prefered*/
 	cout << "Please enter the price you paid for the comic. (DO NOT PUT COMMAS)" << endl;
-	 cin >> pricePaid[numberOfComics + 1];
+	 cin >> pricePaid[numberOfComics];
 	cout << endl;
 
 
@@ -285,36 +285,42 @@ int getComicInfo()			// gets all of the comics' information from the user
 int writeToFiles()			// take user inputs and put into respective files
 {
 	int write;
-	series_namefile << seriesName[numberOfComics + 1] << endl;
-	issue_namefile << issueName[numberOfComics + 1] << endl;
-	author_file << author[numberOfComics + 1] << endl;
-/*
-	artist_fire << artistOrPenciller[0];
-	colorist_file << colorist[0];
-	issue_numberfile << issueNumber[0];
-	variant_letterfile << variantLetter[0];
-	publish_datefile << publishDate[0];
-	condition_file << conditionRating[0];*/
-	price_paidfile << pricePaid[numberOfComics + 1];
-
+	for (int comNO = 0; comNO < numberOfComics; comNO++)
+	{
+		series_namefile << seriesName[comNO] << endl;
+		issue_namefile << issueName[comNO] << endl;
+		author_file << author[comNO] << endl;
+	/*
+		artist_fire << artistOrPenciller[0];
+		colorist_file << colorist[0];
+		issue_numberfile << issueNumber[0];
+		variant_letterfile << variantLetter[0];
+		publish_datefile << publishDate[0];
+		condition_file << conditionRating[0];*/
+		price_paidfile << pricePaid[comNO] << endl;
+	}
 	return (write);
 }
 
 int recallFiles ()			// calling the files to read inputs within
 {
 	int recall;
-	seriesnamefile >> seriesName[numberOfComics + 1];
-	issuenamefile >> issueName[numberOfComics + 1];
-	authorfile >> author[numberOfComics + 1];
-/*
-	artistfire >> artistOrPenciller[0];
-	coloristfile >> colorist[0];
-	issuenumberfile >> issueNumber[0];
-	variantletterfile >> variantLetter[0];
-	publishdatefile >> publishDate[0];
-	conditionfile >> conditionRating[0];*/
-	pricepaidfile >> pricePaid[numberOfComics + 1];
-
+	while (!seriesnamefile.eof()&& !issuenamefile.eof()&& !authorfile.eof() && !pricepaidfile.eof() && numberOfComics < MAX_NUM_OF_COMICS)
+	{
+		seriesnamefile >> seriesName[numberOfComics];
+		issuenamefile >> issueName[numberOfComics];
+		authorfile >> author[numberOfComics];
+	/*
+		artistfire >> artistOrPenciller[0];
+		coloristfile >> colorist[0];
+		issuenumberfile >> issueNumber[0];
+		variantletterfile >> variantLetter[0];
+		publishdatefile >> publishDate[0];
+		conditionfile >> conditionRating[0];*/
+		pricepaidfile >> pricePaid[numberOfComics];
+		numberOfComics++;
+		cout << "number of comics incremented to " << numberOfComics << endl;
+	}
 	return (recall);
 }
 
@@ -371,7 +377,7 @@ void save_comic_files()
 {
 	writeToFiles();
 	closeOfiles();
-	cout << "Now saving inputted comics..." << endl;
+	cout << "Finished saving inputted comics..." << endl;
 }
 int loadComicFiles()
 {
@@ -403,7 +409,6 @@ int listComics()
 	int list;
 	int choice;
 	char userChoice;
-	loadComicFiles();
 	cout << "How would you like your comics organized?" << endl;
 	cout << endl;
 	
@@ -411,7 +416,7 @@ int listComics()
 	cin >> choice;
 	cout << "You chose to organize your comics by option #" << choice << "." << endl;
 	//do cases for the cout formatting (try to do it in chart format)
-	for (int comNo = 1; comNo <= numberOfComics; comNo++)
+	for (int comNo = 0; comNo < numberOfComics; comNo++)
 	{
 		switch (choice)
 		{
@@ -528,7 +533,7 @@ int main()
 	cout << endl;
 	getComicInfo();
 	numberOfComics++;
-
+	cout << "number of comics incremented to " << numberOfComics << endl;
 	cout << "Do you want to input more comics? Y (Yes) or N (No)" << endl;
 	 cin >> userAnswer;
 	 cout << endl;
@@ -540,6 +545,7 @@ int main()
 			cin.ignore(100,'\n');
 			getComicInfo(); //will call function here
 			numberOfComics++;
+			cout << "number of comics incremented to " << numberOfComics << endl;
 			cout << "Do you want to input more comics? Y (Yes) or N (No)" << endl;
 			cin >> userAnswer;
 		}
@@ -549,7 +555,8 @@ int main()
 		save_comic_files();
 		cout << endl;
 		cout << endl;
-		listComics();
+		loadComicFiles();
+		listComics();	
 		cout << "You entered: " << numberOfComics << " comics!" << endl;
 		cout << "Keep your comics safe! Thank you for using this program." << endl;
 	}
