@@ -23,7 +23,7 @@
  * the comics' series name, issue name, issue number, author, and main artist.
  * Hopefully it will organize these titles by the users selected parameters. */
 // Author: Kyla Evans
-// Date Last Modified: 4/29/19
+// Date Last Modified: 5/1/19
 #include <iostream>
 #include <iomanip>
 #include <fstream>
@@ -318,7 +318,7 @@ int recallFiles ()			// calling the files to read inputs within
 		publishdatefile >> publishDate[0];
 		conditionfile >> conditionRating[0];*/
 		pricepaidfile >> pricePaid[numberOfComics];
-		numberOfComics++;
+	//	numberOfComics++;  It's this incrementation that messed it up.
 		cout << "number of comics incremented to " << numberOfComics << endl;
 	}
 	return (recall);
@@ -387,7 +387,6 @@ int loadComicFiles()
 	recallFiles();
 	return (loaded);
 }
-//int organizationCases()	{}	//Except for the default case
 
 void orgMenu()		//make list to choose what variable to organize comics by
 {
@@ -420,31 +419,31 @@ int listComics()
 	{
 		switch (choice)
 		{
-			case 1: cout << setw(10) << comNo << ": " << seriesName[comNo] << "| " << issueName[comNo] << "| " << author[comNo] <<
+			case 1: cout << setw(10) << comNo + 1 << ": " << seriesName[comNo] << '\t' << "| " << issueName[comNo] << '\t' << "| " << author[comNo] <<
 						// "| " << artistOrPenciller[0] <<
 						// "| " << colorist[0] <<
 						// "| " << issueNumber[0] << variantLetter[0] <<
 						// "| " << publishDate[0] <<
 						// "| " << conditionRating[0] <<
-						 "| " << pricePaid[comNo] <<
+						'\t' << "| " << pricePaid[comNo] <<
 						endl;
 					  break;
-			case 2: cout << setw(10) << comNo << ": " << issueName[comNo] << "| " << seriesName[comNo] << "| " << author[comNo] <<
+			case 2: cout << setw(10) << comNo + 1 << ": " << issueName[comNo] << '\t' << "| " << seriesName[comNo] << '\t' << "| " << author[comNo] <<
 						//	"| " << artistOrPenciller[0] <<
 						// "| " << colorist[0] <<
 						// "| " << issueNumber[0] << variantLetter[0] <<
 						// "| " << publishDate[0] <<
 						// "| " << conditionRating[0] <<
-						 "| " << pricePaid[comNo] <<
+						'\t' << "| " << pricePaid[comNo] <<
 						endl;
 					  break;
-			case 3: cout << setw(10) << comNo << ": " << author[comNo] << "| " << seriesName[comNo] << "| " << issueName[comNo] << 
+			case 3: cout << setw(10) << comNo + 1 << ": " << author[comNo] << '\t' << "| " << seriesName[comNo] << '\t' << "| " << issueName[comNo] << 
 						//	"| " << artistOrPenciller[0] <<
 						// "| " << colorist[0] <<
 						// "| " << issueNumber[0] << variantLetter[0] <<
 						// "| " << publishDate[0] <<
 						// "| " << conditionRating[0] <<
-						 "| " << pricePaid[comNo] <<
+						'\t' << "| " << pricePaid[comNo] <<
 						endl;
 					  break;
 			/*case '4': cout << setw(10) << comNo << ": " << artistOrPenciller[0] << "| " << seriesName[0] << "| " << issueName[0] << "| "
@@ -487,8 +486,8 @@ int listComics()
 						//  << publishDate[0] << "| " 
 						//  << pricePaid[0] << endl;
 					  break;*/
-			case '9': cout << setw(10) << comNo << ": " << pricePaid[comNo] << "| " << seriesName[comNo] << "| " << issueName[comNo] << "| "
-							<< author[comNo] //<< "| "
+			case 9: cout << setw(10) << comNo + 1 << ": " << pricePaid[comNo] << '\t' << "| " << seriesName[comNo] << '\t' << "| " << issueName[comNo] << '\t' << "| "
+							 << author[comNo] //<< "| "
 						//  << artistOrPenciller[0] << "| "
 						//  << colorist[0] << "| "
 						//  << issueNumber[0] << variantLetter[0] << "| "
@@ -513,7 +512,12 @@ int listComics()
 	closeIfiles();
 	return (list);
 }
-
+void comicBubbleSortWords(seriesName[], issueName[], author[], numberOfComics)			// the sorting function for nominal inputs
+{
+	}
+void comicBubbleSortNums()			// the sorting function for ordinal inputs
+{}
+	
 
 
 int main()
