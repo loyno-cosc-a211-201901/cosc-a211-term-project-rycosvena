@@ -407,7 +407,7 @@ int listComics()
 {
 	int list;
 	int choice;
-	char userChoice;
+	int userChoice;
 	cout << "How would you like your comics organized?" << endl;
 	cout << endl;
 	
@@ -512,11 +512,8 @@ int listComics()
 	closeIfiles();
 	return (list);
 }
-void comicBubbleSortWords(seriesName[], issueName[], author[], numberOfComics)			// the sorting function for nominal inputs
-{
-	}
-void comicBubbleSortNums()			// the sorting function for ordinal inputs
-{}
+//void comicBubbleSortWords(seriesName[], issueName[], author[], numberOfComics)			// the sorting function for nominal inputs {}
+//void comicBubbleSortNums()			// the sorting function for ordinal inputs {}
 	
 
 
@@ -534,14 +531,26 @@ int main()
 			// ", condition" <<
 			", and price paid, when applicable." <<
 			endl;
+	// I want to make this work.
+	/*cout << "You already have items in a file?(Y or N)" << endl;
+	 cin >> userAnswer;
+	 
+	if (userAnswer == 'Y')
+	{
+		loadComicFiles();
+		listComics();
+	}
+	else
+	{
+		cin.ignore(100,'\n');*/
 	cout << endl;
 	getComicInfo();
 	numberOfComics++;
 	cout << "number of comics incremented to " << numberOfComics << endl;
 	cout << "Do you want to input more comics? Y (Yes) or N (No)" << endl;
 	 cin >> userAnswer;
-	 cout << endl;
-// I probably need if/ else
+	cout << endl;
+	// I probably need if/ else
 	while (numberOfComics <= MAX_NUM_OF_COMICS && userAnswer == 'Y')
 	{
 		if (userAnswer == 'Y')
@@ -551,7 +560,7 @@ int main()
 			numberOfComics++;
 			cout << "number of comics incremented to " << numberOfComics << endl;
 			cout << "Do you want to input more comics? Y (Yes) or N (No)" << endl;
-			cin >> userAnswer;
+			 cin >> userAnswer;
 		}
 	}
 	if (userAnswer == 'N')
@@ -564,12 +573,12 @@ int main()
 		cout << "You entered: " << numberOfComics << " comics!" << endl;
 		cout << "Keep your comics safe! Thank you for using this program." << endl;
 	}
+
+
+	// search function??
+	// find a way to select and alphebetize	by selected parameters
+	// Need to figure out storage. watch lecture 0x17 (3-1-19)
+	// stay tune for arrays
+	return 0;
 	
-
-
-// search function??
-// find a way to select and alphebetize	by selected parameters
-// Need to figure out storage. watch lecture 0x17 (3-1-19)
-// stay tune for arrays
-return 0;
 }
